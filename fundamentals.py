@@ -1,3 +1,15 @@
+"""
+This contains the solutions to two problem involving Linked Lists and another one involving evaluating
+the reverse polish notation. 
+
+The Linked list problems involve evaluating if a linked list is palindromic and the removal of the n-th 
+node from the end of the linked list.
+
+To Add: more test cases and problem description for each
+
+"""
+
+
 class Node:
 
     def __init__(self, item, next=None):
@@ -68,7 +80,7 @@ class fundamentals:
             curr = curr.next
         return True
 
-    # is the linked list a palindrome
+    # Evaluate a string in the Reverse Polish Notation
     def evalRPN(self, s):
 
         stack = []
