@@ -1,0 +1,4 @@
+Prepare to go through the interview fast
+Cover time complexity  and memory space
+No need to focus on syntax error more and taking input
+
