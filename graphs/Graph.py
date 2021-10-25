@@ -17,7 +17,7 @@ class Node:
 class Graph:
     def __init__(self, number_of_vertices=0):
         self.list = defaultdict(list)
-        self.matrix = [[0]*number_of_vertices]*number_of_vertices
+        # self.matrix = [[0]*number_of_vertices]*number_of_vertices
         self.len = number_of_vertices
         # define the graph as either an adjacency list or adjacency matrix
         # we’ll use an adjacency list
@@ -31,7 +31,7 @@ class Graph:
             if node2 in self.list[node1]:
                 del self.list[node1][node2]
         else:
-            self.graph[node1][node2] = weight
+            self.list[node1][node2] = weight
             # method adds an edge of weight w between vertices v and u when w is a number;
             #  if the edge already exists, its weight is updated to w. If w is None then the edge, if it exists, is removed, and if absent remains absent.
 
@@ -95,7 +95,7 @@ class Graph:
                         heapq.heappush(heap, (new_weight, node))
 
             return distance
-        return [bell_ford(), '\n', dijksta()]
+        return bell_ford() == dijksta()
 
     def mst(self, start_node):
         def prims():
@@ -164,7 +164,6 @@ class Graph:
             mst_cost = 0
             while len(mst) < len(visited)-1:
                 (cost, From, To) = heapq.heappop(heap)
-                print(From, To, cost)
                 p_from = find(From)
                 p_to = find(To)
                 if p_from != p_to:
@@ -172,13 +171,51 @@ class Graph:
                     mst_cost += cost
                     union(p_from, p_to)
             return (mst, mst_cost)
-        print(kruskals())
-        return prims()
+
+        return prims() == kruskals()
+
+    '''
+    Say we have a garden where 1’s rep trees and 0’s rep grass. We assured that the boxes next to edges are always filled with grass
+
+    [[0,0,0,0,0,0,0,0]
+    [0,1,1,1,0,0,0,0]
+    [0,1,0,1,0,0,0,0]
+    [0,1,0,0,0,0,0,0]
+    [0,0,0,0,0,0,0,0]]
+
+    1 forest
+
+    Return how many forests we have in our garden. We define forests as adjacent trees vertically or horizontally. 
+    '''
+
+    def num_forests(self, arr):
+        visited = set()
+        forests = 0
+        m, n = len(arr), len(arr[0])
+
+        def dfs(r, c, count):
+            if (r, c) in visited or arr[r][c] != 1:
+                return
+            count += 1
+            visited.add((r, c))
+            for i, j in [(0, 1), (1, 0), (-1, 0), (0, -1)]:
+                n_r, n_c = r+i, c + j
+                if n_r < m and n_c < n and n_r >= 0 and n_c >= 0 and arr[n_r][n_c] == 1 and (n_r, n_c) not in visited:
+                    dfs(n_r, n_c, count)
+            return count
+        for i in range(m):
+            for j in range(n):
+                if arr[i][j] == 1 and (i, j) not in visited:
+                    count = dfs(i, j, 0)
+                    if count > 0:
+                        forests += 1
+
+        return forests
 
 
 if __name__ == '__main__':
-    graph = Graph()
-    directed_graph = Graph()
+    graph = Graph()  # undirected graph for mst problems
+    directed_graph = Graph()  # directed graph for sssp problems
 
     nodes = [[5, 3, 17], [5, 4, 18], [5, 12, 6], [12, 4, 2], [12, 10, 3], [
         4, 10, 19], [4, 3, 16], [3, 6, 30], [4, 6, 88], [6, 10, 8]]
@@ -186,7 +223,32 @@ if __name__ == '__main__':
         graph.len += 1
         graph.list[a].append((b, weight))
         graph.list[b].append((a, weight))
-        # directed graph for sssp problems
         directed_graph.list[a].append((b, weight))
+    # Test Node class
+    node1 = Node(4)
+    node2 = Node(5)
+    node1.add_nbr(node2)
+    print(node1)
+
+    # Test MST algorithms
     print(graph.mst(3))
+
+    # Test SSSP algorithms
     print(directed_graph.sssp(5, 6))
+
+    # For the number of forests problem
+    arr_a = [[0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 1, 1, 1, 0, 0, 0, 0],
+             [0, 1, 0, 1, 0, 0, 0, 0],
+             [0, 1, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0]]
+    arr_b = [[0, 0, 0, 0],
+             [1, 1, 0, 1], [
+        1, 0, 1, 0],
+        [0, 0, 1, 1]]
+    arr_c = [[0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 1, 1, 1, 0, 0, 0, 0],
+             [0, 1, 0, 1, 0, 1, 0, 0],
+             [0, 1, 0, 0, 0, 1, 0, 0],
+             [0, 0, 1, 0, 0, 0, 0, 1]]
+    print(graph.num_forests(arr_c))
