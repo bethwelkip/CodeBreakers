@@ -37,3 +37,59 @@ Sample Output 0
 
 
 '''
+# WINNER
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+
+def parity(x, nr):
+
+    k = int(math.log2(nr + 1))
+    while(k >= 0):
+        x ^= x >> int(2**k)
+        k -= 1
+
+    return (x & 1)
+
+
+if __name__ == '__main__':
+    first_multiple_input = input().rstrip().split()
+
+    n = int(first_multiple_input[0])
+
+    m = int(first_multiple_input[1])
+
+    s = 0
+    d = dict()
+
+    for m_itr in range(m):
+        # Parse the query
+
+        second_multiple_input = input().rstrip().split()
+
+        queryType = int(second_multiple_input[0])
+
+        index = int(second_multiple_input[1])
+
+        # Do something with each query
+
+        if queryType == 1:
+            if index in d:
+                print(d[index])
+            else:
+                print(0)
+        elif queryType == 2:
+            s = s ^ (1 << (n - index - 1))
+            if index in d:
+                d[index] = 1 - d[index]
+            else:
+                d[index] = 1
+        elif queryType == 3:
+            aux = s >> (n - index - 1)
+            print(parity(aux, index))
