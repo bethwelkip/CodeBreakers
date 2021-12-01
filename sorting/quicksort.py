@@ -33,9 +33,32 @@ def quicksort(arr, l, h):
     quicksort(arr, l, p)
     quicksort(arr, p+1, h)
     return arr
+def k_th_smallest(arr, k):
+    def quick_sort(l, h):
+        if l >= h:
+            return 
+
+        p = partition(arr, l, h)
+        if p == k:
+            print("here")
+            return arr[p]
+        if p > k:
+            mid =  (p+l-1)//2
+            quick_sort(l, mid)
+            quick_sort(mid+1, p)
+        else:
+            mid = (h+p+1)//2
+            quick_sort(p+1, mid)
+            quick_sort(mid+1, h)
+        return arr[k]
+    return quick_sort(0, len(arr)-1)
 
 
-arr = [random.randint(0, 1000) for _ in range(20)]
+
+
+arr = [5,4,7,2,8,6]#[random.randint(0, 1000) for _ in range(5)]
 print(arr)
 sorted_arr = quicksort(arr, 0, len(arr)-1)
-print(sorted_arr == sorted(arr))
+
+print(sorted_arr)
+print(k_th_smallest(arr, 3))
