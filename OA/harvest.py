@@ -27,7 +27,7 @@ def max_profit(k, arr):
 
 def max_profit_efficient(k, arr):
     n = len(arr)
-    
+
     total_sum = [0 for _ in range(2*n + 1)]
     for i in range(n):
         total_sum[i + 1] = total_sum[i] + arr[i]
