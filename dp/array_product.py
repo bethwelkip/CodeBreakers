@@ -1,4 +1,10 @@
+'''
+Given an array A[] of positive integers, return an array of integers whose k'th element is equal to the product of every integer in A[] except for the k'th element in A[].
 
+Example #1:
+Input: [1, 1, 2, 5]
+Output: [10, 10, 5, 2]
+'''
 class Solution:
     def productExceptCurrentElement(self, arr):
         '''
