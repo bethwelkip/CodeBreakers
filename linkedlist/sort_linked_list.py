@@ -86,7 +86,7 @@ def merge_sort(head1, head2):
         curr = head
         while curr.next and curr.next != mid:
             curr = curr.next
-        curr.next = none
+        curr.next = None
 
         left = partition(head)
         right = partition(mid)
