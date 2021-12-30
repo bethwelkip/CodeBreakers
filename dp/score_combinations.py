@@ -1,6 +1,10 @@
+from functools import lru_cache
+
+@lru_cache(1000)
 def combinations(score):
     '''
-    final score: score
+    final score: sc
+    ore
     options: 2,3, 7
     '''
     res = set()
@@ -14,6 +18,7 @@ def combinations(score):
                 recurse(currScore-option, chosen + [option])
     recurse(score, [])
     return res
+
 def bottom_up_dp(score):
     arr = [score+1 for _ in range(score+1)]
     arr[0] = 0
@@ -27,5 +32,5 @@ def bottom_up_dp(score):
 
 def top_down_dp(score):
     pass
-print(combinations(12))
+print(combinations(300))
 print(bottom_up_dp(12))
