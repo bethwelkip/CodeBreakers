@@ -5,6 +5,8 @@ Example #1:
 Input: [1, 1, 2, 5]
 Output: [10, 10, 5, 2]
 '''
+
+
 class Solution:
     def productExceptCurrentElement(self, arr):
         '''
