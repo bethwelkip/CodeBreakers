@@ -28,7 +28,7 @@ class BST:
             else:
                 return self._insert(curNode.right, value)
 
-        elif value > curNode.value:
+        elif value < curNode.value:
             if curNode.left is None:
                 curNode.left.value = Node(value)
                 return
